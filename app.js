@@ -1,5 +1,5 @@
 // Set constraints for the video stream
-var constraints = { video: { facingMode: "user" }, audio: false };
+var constraints = { video: { deviceId: 0/*, facingMode: "user"*/ }, audio: false };
 // Define constants
 const cameraView = document.querySelector("#camera--view"),
     cameraOutput = document.querySelector("#camera--output"),
@@ -10,7 +10,7 @@ function cameraStart() {
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function(stream) {
-        track = stream.getTracks()[1];
+        track = stream.getTracks()[0];
         cameraView.srcObject = stream;
     })
     .catch(function(error) {

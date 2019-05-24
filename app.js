@@ -1,11 +1,5 @@
 // Set constraints for the video stream
-var constraints = { 
-    video: { 
-        facingMode: { 
-            exact: 'environment'
-        }
-    }, audio: false 
-};
+var constraints = { video: { facingMode: 'environment'}, audio: false };
 // Define constants
 const cameraView = document.querySelector("#camera--view"),
     cameraOutput = document.querySelector("#camera--output"),
@@ -31,27 +25,5 @@ cameraTrigger.onclick = function() {
     cameraOutput.src = cameraSensor.toDataURL("image/webp");
     cameraOutput.classList.add("taken");
 };
-
-function gotDevices(deviceInfos) {
-    for (let i = 0; i !== deviceInfos.length; ++i) {
-      const deviceInfo = deviceInfos[i];
-      const option = document.createElement('option');
-      option.value = deviceInfo.deviceId;
-      if (deviceInfo.kind === 'audioinput') {
-        option.text = deviceInfo.label ||
-          'microphone ' + (audioSelect.length + 1);
-        audioSelect.appendChild(option);
-      } else if (deviceInfo.kind === 'videoinput') {
-        option.text = deviceInfo.label || 'camera ' +
-          (videoSelect.length + 1);
-        videoSelect.appendChild(option);
-      } else {
-        console.log('Found another kind of device: ', deviceInfo);
-      }
-    }
-}
-
-navigator.mediaDevices.enumerateDevices()
-  .then(gotDevices).then(getStream).catch(handleError);
 // Start the video stream when the window loads
 window.addEventListener("load", cameraStart, false);

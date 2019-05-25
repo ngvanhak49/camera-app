@@ -24,6 +24,24 @@ cameraTrigger.onclick = function() {
     cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
     cameraOutput.src = cameraSensor.toDataURL("image/webp");
     cameraOutput.classList.add("taken");
+
+    cameraSensor.toBlob(postFile, 'image/jpeg');
 };
+
+//Add file blob to a form and post
+function postFile(file) {
+    let formdata = new FormData();
+    formdata.append("image", file);
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://178.128.58.60:5000/image', true);
+    xhr.onload = function () {
+        if (this.status === 200)
+            console.log(this.response);
+        else
+            console.error(xhr);
+    };
+    xhr.send(formdata);
+}
+
 // Start the video stream when the window loads
 window.addEventListener("load", cameraStart, false);
